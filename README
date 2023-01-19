@@ -1,0 +1,7 @@
+mcp2200-cmd
+===========
+
+Helper script for configuring an MCP2200 chip from a FreeBSD uhid device.
+
+See Microchip TB3066 - MCP2200 HID Interface Command Description for more
+information.

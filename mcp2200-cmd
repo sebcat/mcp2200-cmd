@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# XXX: There is a lot of assumptions made here
+#      Some day these assumptions may be made explicit breaking compat.
+#      Most likely, this will do for now and nothing will ever change.
+# - all GPIOs are configured as inputs
+# - the default baud rate is (12000000 / 0x270) - 1
+
+die() {
+  printf "$1\n" >&2
+  exit 1
+}
+
+DEVICE=/dev/uhid0
+
+[ -n "$1" ] || die "missing subcommand"
+case $1 in
+  idle-high)
+    perl -e 'print "\x10\x00\x00\x00\xff\x00\x00\x00\x02\x70"' > "$DEVICE"
+    ;;
+  idle-low)  
+    perl -e 'print "\x10\x00\x00\x00\xff\x00\x00\x02\x02\x70"' > "$DEVICE"
+    ;;
+  *)
+    die "unknown command: $1"
+    ;;
+esac
